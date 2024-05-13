@@ -7,16 +7,27 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 
 
-const Page = () => {
+type postlist = {
+  data:{
+    id: number
+    username: string
+    imageUrl: string
+    description: string
+    likes: number
+    comments: number
+  }[]
+}
+
+const Page = (props: postlist) => {
+  
   return (
-    <div className="flex justify-center space-x-7"> {/* Center the content horizontally */}
-      <div className="flex ">
+    <div className="flex item-center justify-center border-r"> {/* Center the content horizontally */}
+      <div className="flex justify-between">
         {/* Navbar */}
         <div className="w-1/4 p-4">
           <div className="mb-4">
@@ -25,32 +36,48 @@ const Page = () => {
           </div>
           {/* Other navbar items */}
         </div>
-        {/* Posts */}
-        <div className="w-3/4 border-r border-gray-300 overflow-y-auto"> {/* Make posts container scrollable */}
-          <Card className="w-[350px]">
-            <CardHeader>
-              <CardTitle>Create project</CardTitle>
-              <CardDescription>Deploy your new project in one-click.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {/* Post Content */}
-              <div className="mb-4">
-                <div className="mb-2">
-                  {/* Render your post content here */}
-                </div>
-                <div className="font-bold">Username</div>
-                <div>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum, justo eget vestibulum consequat, lorem justo tristique tortor.
-                </div>
-              </div>
-              {/* Repeat for other posts */}
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button variant="outline">Cancel</Button>
-              <Button>Deploy</Button>
-            </CardFooter>
-          </Card>
-        </div>
+        {props.data.map(data => (
+            <div key={data.id} className="w-[450px] "> {/* Make posts container scrollable */}
+              <Card className="w-[400px]">
+                <CardHeader>
+                  <CardTitle>{data.username}</CardTitle>
+                  <CardDescription>Deploy your new project in one-click.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col space-y-4">
+                    {/* Username */}
+                    <div className="font-bold"></div> {/* Display the actual username */}
+                    {/* Post Image */}
+                    <img src={data.imageUrl} alt="Post" /> {/* You should provide the actual image URL here */}
+                    {/* Post Description */}
+                    <div>
+                      {data.description}
+                    </div>
+                    {/* Like and Comment Section */}
+                    <div className="flex justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Button>
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </Button>
+                        <span>{data.likes}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Button>
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                        </Button>
+                        <span>{data.comments}</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+))}
       </div>
     </div>
   );

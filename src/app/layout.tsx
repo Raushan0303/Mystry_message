@@ -4,7 +4,8 @@ import { Inter } from "next/font/google";
 import AuthProvider from "@/context/AuthProvider";
 import { Toaster } from "@/components/ui/toaster"
 import Navbar from "@/components/Navbar";
-
+import  posts  from '@/PostList/post';
+import Page from "./(app)/home/page";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,11 +18,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
       <AuthProvider>
       <body className={inter.className}>
         <Navbar />
+        <Page data = {posts}/>
         {children}
       <Toaster />
       </body>
