@@ -10,21 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import post from '@/PostList/post.json';
 
 
-type postlist = {
-  data:{
-    id: number
-    username: string
-    imageUrl: string
-    description: string
-    likes: number
-    comments: number
-  }[]
-}
-
-const Page = (props: postlist) => {
-  
+const Page = () => {
+ 
   return (
     <div className="flex item-center justify-center border-r"> {/* Center the content horizontally */}
       <div className="flex justify-between">
@@ -36,17 +26,18 @@ const Page = (props: postlist) => {
           </div>
           {/* Other navbar items */}
         </div>
-        {props.data.map(data => (
-            <div key={data.id} className="w-[450px] "> {/* Make posts container scrollable */}
-              <Card className="w-[400px]">
+       
+            <div  className="w-[450px] "> {/* Make posts container scrollable */}
+            {post.map(data => (
+              <Card key={data.id} className="w-[400px]">
                 <CardHeader>
-                  <CardTitle>{data.username}</CardTitle>
+                  <CardTitle></CardTitle>
                   <CardDescription>Deploy your new project in one-click.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col space-y-4">
                     {/* Username */}
-                    <div className="font-bold"></div> {/* Display the actual username */}
+                    <div className="font-bold">{data.username}</div> {/* Display the actual username */}
                     {/* Post Image */}
                     <img src={data.imageUrl} alt="Post" /> {/* You should provide the actual image URL here */}
                     {/* Post Description */}
@@ -76,8 +67,9 @@ const Page = (props: postlist) => {
                   </div>
                 </CardContent>
               </Card>
+              ))}
             </div>
-))}
+
       </div>
     </div>
   );
